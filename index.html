@@ -85,7 +85,23 @@ h2{font-size:clamp(2.5rem,6.6vw,6rem)}
 .l{transform:rotateY(-90deg) translateZ(calc(var(--w)/2))}.r{transform:rotateY(90deg) translateZ(calc(var(--w)/2))}
 .t,.b{width:var(--w);height:var(--d);margin:calc(var(--d)/-2) 0 0 calc(var(--w)/-2);background:#B71F17}
 .t{transform:rotateX(90deg) translateZ(calc(var(--h)/2))}.b{transform:rotateX(-90deg) translateZ(calc(var(--h)/2));background:#7d140f}
-.t::after{content:"";position:absolute;left:0;right:0;top:50%;height:44px;translate:0 -50%;background:rgba(245,236,217,.82)}
+.cube>.t{background:none;overflow:visible;backface-visibility:visible;transform-style:preserve-3d}
+.cube>.in{width:var(--w);height:var(--d);margin:calc(var(--d)/-2) 0 0 calc(var(--w)/-2);transform:rotateX(90deg) translateZ(calc(var(--h)/2 - 4px));background:radial-gradient(circle,#5a3a22,#2a180c);backface-visibility:visible}
+.fl{position:absolute;top:0;bottom:0;width:50%;background:#B71F17;transition:transform .8s cubic-bezier(.3,1.5,.5,1);backface-visibility:visible}
+.fl.fa{left:0;transform-origin:0 50%;border-right:20px solid rgba(245,236,217,.85)}.fl.fb{right:0;transform-origin:100% 50%;border-left:20px solid rgba(245,236,217,.85);transition-delay:.08s}
+.open .fl.fa{transform:rotateY(128deg)}.open .fl.fb{transform:rotateY(-128deg)}
+.pops{position:absolute;left:50%;top:50%;width:0;height:0;z-index:3;--k:.8}
+.pop{position:absolute;width:96px;height:96px;margin:-48px;border-radius:50%;overflow:hidden;border:5px solid #fff;box-shadow:0 0 0 2px var(--ink),0 18px 26px -10px rgba(29,21,17,.55);transform:translate(0,-10px) scale(0) rotate(-120deg);opacity:0;pointer-events:none;transition:transform .75s cubic-bezier(.3,1.7,.4,1) calc(var(--i)*70ms),opacity .25s calc(var(--i)*70ms)}
+.open .pop{transform:translate(calc(var(--x)*var(--k)),calc(var(--y)*var(--k)*.74 - 14px)) scale(1) rotate(var(--r));opacity:1;pointer-events:auto}
+.box3d .cube{transition:scale .6s cubic-bezier(.3,1.5,.5,1)}.box3d.open{z-index:5}.hint{transition:translate .5s,rotate .5s}.open .hint{translate:30px 250px;rotate:-4deg}.open .hint::after{display:none}
+.open .pop img{animation:bob 3.2s ease-in-out calc(var(--i)*-.5s) infinite}
+.pop:hover{z-index:2;box-shadow:0 0 0 3px var(--red),0 18px 26px -10px rgba(29,21,17,.55)}
+.mist{position:absolute;left:50%;top:38%;width:0;height:0;pointer-events:none}
+.mist i{position:absolute;width:90px;height:90px;margin:-45px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.95),rgba(191,227,245,0) 70%);opacity:0}
+.open .mist i{animation:puff 1.6s ease-out forwards}
+.mist i:nth-child(2){animation-delay:.1s!important;--mx:-70px}.mist i:nth-child(3){animation-delay:.2s!important;--mx:70px}.mist i:nth-child(4){animation-delay:.3s!important;--mx:-30px}.mist i:nth-child(5){animation-delay:.38s!important;--mx:40px}
+@keyframes puff{0%{opacity:0;transform:translate(0,0) scale(.4)}25%{opacity:.9}100%{opacity:0;transform:translate(var(--mx,0),-190px) scale(2.4)}}
+.box3d:focus-visible{outline:3px solid var(--ink);outline-offset:6px;border-radius:20px}
 .f .nm{font-size:2rem;line-height:.86}.f .sku{font-family:'Gelasio';font-style:italic;letter-spacing:0;font-size:1.05rem;margin-top:6px}
 .f .circ{position:absolute;right:-26px;bottom:-30px;width:150px;height:150px;border-radius:50%;overflow:hidden;border:5px solid var(--paper)}
 .f small,.bk small{font-family:'DM Sans';letter-spacing:0;font-weight:700;font-size:.62rem;position:absolute;left:16px;bottom:12px;text-transform:uppercase}
@@ -252,7 +268,7 @@ footer .big{font-family:'Archivo Black';font-size:21.5vw;letter-spacing:-.06em;l
 footer .big span{display:inline-block;transform:translateY(calc((1 - var(--f,0))*60%*var(--i)))}
 .concept{position:fixed;left:14px;bottom:14px;z-index:50;background:var(--ink);color:var(--paper);font-size:.72rem;padding:7px 12px;border-radius:99px;opacity:.9}
 @media(max-width:860px){body{font-size:16px}.top nav{display:none}.hero .g,.def .grid,.panel,.enq .grid{grid-template-columns:1fr}
-  .box3d{height:300px}.hint{right:2%}
+  .box3d{height:300px;margin-top:120px}.pops{--k:.5}.open .hint{translate:0 215px}.pop{width:74px;height:74px;margin:-37px}.hint{right:2%}
   .stage{height:auto}.stage .frame{position:static;height:auto;padding:0 0 20px}.stage figure{width:calc(100% - 28px);height:56vh;border-radius:20px}.stage figcaption{opacity:1;transform:none}.spin{right:8%;top:-40px}
   .st .pic{top:4%;height:40%;width:74%;left:13%!important;right:auto!important;transform:translateZ(30px)!important}.st .tx{top:auto;bottom:6%;translate:none;width:86%;left:7%!important;right:auto!important}.st .tx h3{margin:2px 0 8px}.st .tx p{font-size:1rem}
   .st.title .tx{position:static;width:100%}.belt{width:260px;margin-left:-130px}.crate{display:none}.hero h1{font-size:8.4vw;white-space:normal}.cube{scale:.85}.hud .bar{margin:0 12px 8px}
@@ -278,14 +294,14 @@ footer .big span{display:inline-block;transform:translateY(calc((1 - var(--f,0))
   <div class="wrap">
     <div class="g">
       <h1><span class="ln"><span>We make the food</span></span><span class="ln"><span>your kitchen gets</span></span><span class="ln"><span><em>famous</em> for.</span></span></h1>
-      <div class="box3d" id="box" aria-label="Concept foodservice carton. Drag to rotate." role="img">
-        <span class="hint">drag me</span><div class="shadow"></div>
+      <div class="box3d" id="box" aria-label="CP Norfolk India carton. Tap to open, drag to rotate." role="button" tabindex="0" aria-expanded="false">
+        <span class="hint" id="hint">tap to open</span><div class="shadow"></div><div class="mist" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><div class="pops"><a class="pop" href="#catalogue" title="Chicken kebab 'e' seekh" style="--x:-205px;--y:-120px;--r:-8deg;--i:0"><img src="assets/p/seekh.jpg" alt="Chicken kebab 'e' seekh"></a><a class="pop" href="#catalogue" title="Supreme chicken nuggets" style="--x:-120px;--y:-205px;--r:6deg;--i:1"><img src="assets/p/nuggets.jpg" alt="Supreme chicken nuggets"></a><a class="pop" href="#catalogue" title="Chicken mini kievs" style="--x:-5px;--y:-240px;--r:-4deg;--i:2"><img src="assets/p/minikievs.jpg" alt="Chicken mini kievs"></a><a class="pop" href="#catalogue" title="Chicken momos" style="--x:112px;--y:-205px;--r:8deg;--i:3"><img src="assets/p/momos.jpg" alt="Chicken momos"></a><a class="pop" href="#catalogue" title="Chicken tikka" style="--x:200px;--y:-118px;--r:-6deg;--i:4"><img src="assets/p/tikka.jpg" alt="Chicken tikka"></a><a class="pop" href="#catalogue" title="Cheese corn bites" style="--x:-250px;--y:-10px;--r:5deg;--i:5"><img src="assets/p/corn.jpg" alt="Cheese corn bites"></a><a class="pop" href="#catalogue" title="Breakfast chicken sausage" style="--x:248px;--y:-8px;--r:-5deg;--i:6"><img src="assets/p/bsausage.jpg" alt="Breakfast chicken sausage"></a></div>
         <div class="cube" id="cube">
           <div class="f"><img class="nmlogo" src="assets/logo-white.png" alt="CP Norfolk India"><div class="sku">chicken kebab 'e' seekh</div><div class="circ"><img src="assets/p/seekh.jpg" alt=""></div><small>Food service · 1 kg pack</small></div>
           <div class="bk"><div class="temp">−18°C</div><p>KEEP FROZEN. COOK FROM FROZEN.</p><small>G D Nellore, Chittoor, A.P.</small><div class="bar"></div></div>
           <div class="l"><div><svg viewBox="0 0 100 70"><path d="M25 62V14M25 14 10 30M25 14l15 16M75 62V14M75 14 60 30M75 14l15 16"/></svg><b>this side up</b></div></div>
           <div class="r"><div><svg viewBox="0 0 100 70"><path d="M50 6v58M22 20l56 30M78 20 22 50M50 6l-8 9M50 6l8 9M50 64l-8-9M50 64l8-9"/></svg><b>keep frozen</b></div></div>
-          <div class="t"></div><div class="b"></div>
+          <div class="in"></div><div class="t"><div class="fl fa"></div><div class="fl fb"></div></div><div class="b"></div>
         </div>
       </div>
     </div>
@@ -445,12 +461,16 @@ const rm=matchMedia('(prefers-reduced-motion:reduce)').matches,cl=(v,a=0,b=1)=>M
 (()=>{const L=$('#load'),t=$('#lt');if(rm){document.body.classList.add('ready');return}
   const t0=performance.now();(function tick(n){const p=cl((n-t0)/1300),v=Math.round(28-46*(1-Math.pow(1-p,3)));t.textContent=(v<0?'−':'')+Math.abs(v)+'°';
     if(p<1)requestAnimationFrame(tick);else setTimeout(()=>{L.classList.add('done');document.body.classList.add('ready')},250)})(t0)})();
-// 3D carton: auto-spin, drag, pointer tilt
-(()=>{const box=$('#box'),cube=$('#cube');let ry=-32,rx=-16,vy=.25,drag=false,lx=0,ly=0;
-  box.addEventListener('pointerdown',e=>{drag=true;lx=e.clientX;ly=e.clientY;box.setPointerCapture(e.pointerId)});
-  box.addEventListener('pointermove',e=>{if(!drag)return;vy=(e.clientX-lx)*.5;ry+=vy;rx=cl(rx-(e.clientY-ly)*.3,-50,30);lx=e.clientX;ly=e.clientY});
-  addEventListener('pointerup',()=>drag=false);
-  (function loop(){if(!drag){ry+=vy;vy+=(.25-vy)*.03}cube.style.transform=`translateY(${Math.sin(performance.now()/900)*8}px) rotateX(${rx}deg) rotateY(${ry}deg)`;if(!rm)requestAnimationFrame(loop)})()})();
+// 3D carton: auto-spin, drag to rotate, tap to open
+(()=>{const box=$('#box'),cube=$('#cube'),hint=$('#hint');let ry=-32,rx=-16,vy=.25,drag=false,lx=0,ly=0,moved=0,open=false;
+  const toggle=()=>{open=!open;box.classList.toggle('open',open);box.setAttribute('aria-expanded',open);hint.textContent=open?'tap to close':'tap to open'};
+  box.addEventListener('pointerdown',e=>{if(e.target.closest('.pop'))return;drag=true;moved=0;lx=e.clientX;ly=e.clientY;box.setPointerCapture(e.pointerId)});
+  box.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-lx,dy=e.clientY-ly;moved+=Math.abs(dx)+Math.abs(dy);vy=dx*.5;ry+=vy;rx=cl(rx-dy*.3,-50,30);lx=e.clientX;ly=e.clientY});
+  box.addEventListener('pointerup',e=>{if(!drag)return;drag=false;if(moved<8)toggle()});
+  box.addEventListener('pointercancel',()=>drag=false);
+  box.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle()}});
+  (function loop(){if(!drag){if(open){const t=Math.round((ry+30)/360)*360-30;ry+=(t-ry)*.06;rx+=(-30-rx)*.06;vy=0}else{ry+=vy;vy+=(.25-vy)*.03;rx+=(-16-rx)*.03}}
+    cube.style.transform=`translateY(${Math.sin(performance.now()/900)*8}px) rotateX(${rx}deg) rotateY(${ry}deg)`;if(!rm)requestAnimationFrame(loop)})()})();
 // 3D fly-through of the line
 const ST=[
  {t:1,h:'Walk the line.',p:'Scroll to travel through the plant, from raw material to a truck at −18°C.'},
